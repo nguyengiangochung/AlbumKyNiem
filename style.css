@@ -1,0 +1,521 @@
+/* ============================================================
+   style.css — Album Kỷ Niệm
+   Phong cách: nhật ký giấy kẻ dòng + ảnh Polaroid dán băng keo
+============================================================ */
+
+:root {
+  --giay:      #fbf6ec;   /* màu giấy */
+  --giay-toi:  #f1e7d3;
+  --muc:       #4a3b32;   /* màu mực chữ */
+  --muc-nhat:  #8a7766;
+  --hong:      #e0607e;   /* màu nhấn chính */
+  --hong-dam:  #c44866;
+  --hong-nhat: #fde8ee;
+  --xanh:      #6aa6a0;
+  --vang:      #f4d58d;
+  --ke:        #e5d9c2;   /* màu đường kẻ dòng */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: var(--muc);
+  min-height: 100vh;
+  /* Nền bàn gỗ nhạt có chấm nhỏ */
+  background-color: #efe3cc;
+  background-image: radial-gradient(rgba(120, 90, 50, 0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   TRÁI TIM BAY (trang trí)
+============================================================ */
+.hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.heart {
+  position: absolute;
+  bottom: -30px;
+  opacity: 0;
+  animation: bay linear forwards;
+}
+@keyframes bay {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  15%  { opacity: 0.55; }
+  100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+}
+
+/* ============================================================
+   TIÊU ĐỀ
+============================================================ */
+.top {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2.2rem 1rem 1rem;
+}
+.top h1 {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(44px, 8vw, 72px);
+  color: var(--hong-dam);
+  text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(224, 96, 126, 0.18);
+  animation: roiXuong 0.8s ease both;
+}
+.top-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  color: var(--muc-nhat);
+  margin-top: -4px;
+  animation: roiXuong 0.8s 0.15s ease both;
+}
+.stats {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: roiXuong 0.8s 0.3s ease both;
+}
+.stats span {
+  background: var(--giay);
+  border: 1.5px dashed var(--muc-nhat);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 13px;
+}
+.stats b { color: var(--hong-dam); }
+
+@keyframes roiXuong {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   BỐ CỤC CHÍNH: form bên trái, album bên phải
+============================================================ */
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 1rem 1.2rem 3rem;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ============================================================
+   FORM — TRANG GIẤY KẺ DÒNG
+============================================================ */
+.notebook {
+  position: sticky;
+  top: 16px;
+  background-color: var(--giay);
+  /* Kẻ dòng ngang */
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, var(--ke) 31px, var(--ke) 32px);
+  border-radius: 6px 14px 14px 6px;
+  padding: 1.6rem 1.4rem 1.6rem 2.6rem;
+  box-shadow: 0 10px 30px rgba(90, 60, 30, 0.22), 0 2px 0 rgba(255,255,255,0.6) inset;
+  border-left: 3px solid #e7a6b6;     /* đường lề đỏ của vở */
+  transform: rotate(-0.6deg);
+  animation: truotVao 0.8s 0.2s ease both;
+}
+@keyframes truotVao {
+  from { opacity: 0; transform: translateX(-40px) rotate(-3deg); }
+  to   { opacity: 1; transform: translateX(0) rotate(-0.6deg); }
+}
+
+/* Gáy lò xo bên trái */
+.spiral {
+  position: absolute;
+  left: -14px;
+  top: 18px;
+  bottom: 18px;
+  width: 22px;
+  background: radial-gradient(circle at 11px 11px, #8a7766 0 4px, transparent 5px) 0 0 / 22px 34px repeat-y;
+}
+
+.notebook h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 34px;
+  color: var(--hong-dam);
+  margin-bottom: 8px;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 21px;
+  font-weight: 700;
+  margin: 12px 0 4px;
+  color: var(--muc);
+}
+
+.notebook input[type=text],
+.notebook input[type=date],
+.notebook textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1.5px solid var(--ke);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  color: var(--muc);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.notebook textarea { resize: vertical; }
+.notebook input:focus,
+.notebook textarea:focus {
+  border-color: var(--hong);
+  box-shadow: 0 0 0 3px var(--hong-nhat);
+}
+
+/* Chọn loại album */
+.type-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.type-card { cursor: pointer; }
+.type-card input { display: none; }
+.type-card span {
+  display: block;
+  text-align: center;
+  padding: 10px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  background: rgba(255,255,255,0.7);
+  border: 2px dashed var(--ke);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+.type-card:hover span { border-color: var(--hong); }
+.type-card input:checked + span {
+  border: 2px solid var(--hong);
+  background: var(--hong-nhat);
+  color: var(--hong-dam);
+  transform: scale(1.04) rotate(-1deg);
+}
+
+/* Khung chọn ảnh */
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+  background: rgba(255,255,255,0.7);
+  border: 2px dashed var(--muc-nhat);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muc-nhat);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.dropzone:hover, .dropzone.keo { border-color: var(--hong); background: var(--hong-nhat); }
+.dropzone small { font-size: 12px; }
+.dropzone img { width: 100%; max-height: 200px; object-fit: cover; display: block; }
+
+/* Nút dán vào album */
+.btn-dan {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--hong), var(--hong-dam));
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #a73852;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.btn-dan:hover  { transform: translateY(-2px); box-shadow: 0 7px 0 #a73852; }
+.btn-dan:active { transform: translateY(4px);  box-shadow: 0 1px 0 #a73852; }
+
+/* ============================================================
+   KHU VỰC ALBUM
+============================================================ */
+.album { animation: roiXuong 0.8s 0.3s ease both; }
+
+/* Các tab giống thẻ đánh dấu trang */
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.tab {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 6px 20px 8px;
+  background: var(--giay-toi);
+  color: var(--muc-nhat);
+  border: none;
+  border-radius: 14px 14px 0 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab:hover { background: var(--giay); color: var(--muc); }
+.tab.active {
+  background: var(--giay);
+  color: var(--hong-dam);
+  box-shadow: 0 -4px 10px rgba(90, 60, 30, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Bộ lọc */
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: var(--giay);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(90, 60, 30, 0.12);
+  font-family: 'Caveat', cursive;
+  font-size: 21px;
+  font-weight: 700;
+}
+.filter select {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
+  padding: 7px 10px;
+  border: 1.5px solid var(--ke);
+  border-radius: 8px;
+  background: white;
+  color: var(--muc);
+  outline: none;
+  cursor: pointer;
+}
+.filter select:focus { border-color: var(--hong); }
+.btn-reset {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border: 1.5px solid var(--muc-nhat);
+  background: transparent;
+  color: var(--muc-nhat);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-reset:hover { background: var(--muc); color: white; border-color: var(--muc); }
+
+/* ============================================================
+   ẢNH POLAROID
+============================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 30px 24px;
+  padding: 10px 6px;
+}
+
+.polaroid {
+  position: relative;
+  background: white;
+  padding: 12px 12px 16px;
+  border-radius: 3px;
+  box-shadow: 0 6px 18px rgba(60, 40, 20, 0.22);
+  cursor: pointer;
+  transform: rotate(var(--goc, 0deg));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  animation: hienRa 0.6s ease both;
+}
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.06) translateY(-6px);
+  box-shadow: 0 16px 32px rgba(60, 40, 20, 0.3);
+  z-index: 5;
+}
+@keyframes hienRa {
+  from { opacity: 0; transform: translateY(30px) rotate(var(--goc, 0deg)) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) rotate(var(--goc, 0deg)) scale(1); }
+}
+
+/* Băng keo dán ảnh */
+.polaroid::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 80px;
+  height: 24px;
+  transform: translateX(-50%) rotate(var(--keo, -3deg));
+  background: var(--mau-keo, rgba(244, 213, 141, 0.8));
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.polaroid .anh {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: #eee;
+  filter: sepia(0.12) saturate(1.05);
+  transition: filter 0.3s;
+}
+.polaroid:hover .anh { filter: none; }
+
+.polaroid .ten {
+  font-family: 'Caveat', cursive;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-top: 10px;
+  text-align: center;
+  word-break: break-word;
+}
+.polaroid .ngay {
+  font-size: 12px;
+  color: var(--muc-nhat);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Nhãn dán loại album */
+.nhan {
+  position: absolute;
+  top: 6px;
+  right: -8px;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  color: white;
+  transform: rotate(6deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+.nhan.chung     { background: var(--hong); }
+.nhan.mot-minh  { background: var(--xanh); }
+
+/* Khi chưa có ảnh */
+.empty { text-align: center; padding: 3rem 1rem; color: var(--muc-nhat); }
+.empty-icon { font-size: 60px; animation: lacLu 2.5s ease-in-out infinite; }
+.empty p { font-family: 'Caveat', cursive; font-size: 26px; }
+@keyframes lacLu {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+
+/* ============================================================
+   LIGHTBOX (xem ảnh lớn)
+============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(40, 25, 15, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: moNen 0.25s ease;
+}
+.lightbox[hidden] { display: none; }
+@keyframes moNen { from { opacity: 0; } to { opacity: 1; } }
+
+.lb-card {
+  position: relative;
+  background: white;
+  padding: 16px 16px 20px;
+  border-radius: 4px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 94vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: nayLen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes nayLen {
+  from { transform: scale(0.7) rotate(-6deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0); opacity: 1; }
+}
+.lb-card img { width: 100%; max-height: 55vh; object-fit: contain; background: #f4f0ea; display: block; }
+.lb-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--hong);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  z-index: 3;
+}
+.lb-info { padding-top: 12px; text-align: center; }
+.lb-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.lb-tag.chung    { background: var(--hong); }
+.lb-tag.mot-minh { background: var(--xanh); }
+.lb-info h3 { font-family: 'Caveat', cursive; font-size: 34px; margin: 6px 0 0; line-height: 1.1; }
+.lb-date { font-size: 13px; color: var(--muc-nhat); margin-bottom: 10px; }
+.lb-note {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, var(--ke) 25px, var(--ke) 26px);
+  background-color: var(--giay);
+  padding: 8px 12px;
+  border-radius: 8px;
+  min-height: 50px;
+}
+.btn-xoa {
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  background: transparent;
+  color: #c0392b;
+  border: 1.5px solid #e6b0aa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-xoa:hover { background: #c0392b; color: white; border-color: #c0392b; }
+
+/* ============================================================
+   THÔNG BÁO NHỎ
+============================================================ */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 80px);
+  background: var(--muc);
+  color: white;
+  padding: 11px 22px;
+  border-radius: 24px;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.35s;
+  z-index: 200;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+/* ============================================================
+   RESPONSIVE — điện thoại / máy tính bảng
+============================================================ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .notebook { position: relative; top: 0; margin-left: 12px; }
+}
+@media (max-width: 500px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }
+  .polaroid .ten { font-size: 20px; }
+  .tab { font-size: 18px; padding: 6px 12px 8px; }
+}
